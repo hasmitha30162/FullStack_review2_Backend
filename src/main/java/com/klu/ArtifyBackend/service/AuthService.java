@@ -40,7 +40,12 @@ public class AuthService {
         user.setOtp(otp);
 
         userRepo.save(user);
-        emailService.sendOtp(user.getEmail(), otp);
+
+        try {
+            emailService.sendOtp(user.getEmail(), otp);
+        } catch (Exception e) {
+            System.out.println("Email failed: " + e.getMessage());
+        }
 
         return "OTP sent to email";
     }
